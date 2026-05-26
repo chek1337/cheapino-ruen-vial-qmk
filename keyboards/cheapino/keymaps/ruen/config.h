@@ -11,3 +11,8 @@
 
 #define ONESHOT_TIMEOUT 1500
 #define ONESHOT_TAP_TOGGLE 2
+
+// OS layout switch shortcuts — configure your OS keyboard settings to match.
+// Defaults: Ctrl+Shift+1 → English, Ctrl+Shift+2 → Russian
+#define RUEN_KEY_EN LCTL(LSFT(KC_1))
+#define RUEN_KEY_RU LCTL(LSFT(KC_2))

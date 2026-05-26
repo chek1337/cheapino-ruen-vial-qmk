@@ -6,26 +6,15 @@ static bool ruen_mod_restore_state = false;
 static uint16_t ruen_mod_timer = 0;
 static bool ruen_word_active = false;
 
-static void ruen_send_layout_switch(void) {
+static void ruen_send_os_shortcut(uint16_t keycode) {
     uint8_t mods = get_mods();
 
     if (mods != 0) {
         del_mods(mods);
     }
 
-    if (keymap_config.swap_lctl_lgui) {
-        register_code(KC_LCTL);
-        tap_code(KC_SPACE);
-        wait_ms(50);
-        unregister_code(KC_LCTL);
-        wait_ms(50);
-    } else {
-        register_code(KC_LGUI);
-        tap_code(KC_SPACE);
-        wait_ms(50);
-        unregister_code(KC_LGUI);
-        wait_ms(50);
-    }
+    tap_code16(keycode);
+    wait_ms(50);
 
     if (mods != 0) {
         add_mods(mods);
@@ -37,7 +26,7 @@ static void ruen_set_layout(bool russian) {
         return;
     }
 
-    ruen_send_layout_switch();
+    ruen_send_os_shortcut(russian ? RUEN_KEY_RU : RUEN_KEY_EN);
     ruen_is_russian = russian;
 }
 

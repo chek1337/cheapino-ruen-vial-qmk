@@ -20,6 +20,7 @@ enum cheapino_layers {
 #define HM_K RSFT_T(KC_K)
 #define HM_L LALT_T(KC_L)
 #define HM_P RGUI_T(KC_P)
+#define HM_SCLN RGUI_T(KC_SCLN)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
@@ -51,9 +52,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_BASE_RU] = LAYOUT_split_3x5_3(
-        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_NO,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_NO,
-        HM_A,    HM_S,    HM_D,    HM_F,    KC_G,             KC_H,    HM_J,    HM_K,    HM_L,    HM_P,
-        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             KC_N,    KC_M,    KC_LBRC, KC_RBRC, KC_NO,
+        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_NO,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+        HM_A,    HM_S,    HM_D,    HM_F,    KC_G,             KC_H,    HM_J,    HM_K,    HM_L,    HM_SCLN,
+        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT,
                           KC_TAB,  KC_SPC,  MO(_NAV),         MO(_SYM),MO(_NUM_NAV), RUEN_LAYER_TOGGLE
     ),
 
