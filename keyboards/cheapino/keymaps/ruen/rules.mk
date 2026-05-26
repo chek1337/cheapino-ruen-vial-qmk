@@ -2,4 +2,5 @@ VIA_ENABLE = yes
 VIAL_ENABLE = yes
 ENCODER_MAP_ENABLE = yes
 CAPS_WORD_ENABLE = yes
+COMBO_ENABLE = yes
 SRC += ruen.c

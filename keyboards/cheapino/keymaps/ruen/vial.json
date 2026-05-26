@@ -38,7 +38,10 @@
         {"name": "RuEn Store", "title": "Store current layout state", "shortName": "RUEN_STORE"},
         {"name": "RuEn Revert", "title": "Restore saved layout state", "shortName": "RUEN_REVERT"},
         {"name": "RuEn '", "title": "Apostrophe (')", "shortName": "RUEN_QUOTE"},
-        {"name": "RuEn \\", "title": "Backslash (\\)", "shortName": "RUEN_BSLS"}
+        {"name": "RuEn \\", "title": "Backslash (\\)", "shortName": "RUEN_BSLS"},
+        {"name": "RuEn Layer Tg", "title": "Toggle base layer EN/RU + OS layout", "shortName": "RUEN_LAYER_TOGGLE"},
+        {"name": "RuEn Ctl+Sft+C", "title": "Cross-layout Ctrl+Shift+C", "shortName": "RUEN_CSC"},
+        {"name": "RuEn Ctl+Sft+V", "title": "Cross-layout Ctrl+Shift+V", "shortName": "RUEN_CSV"}
     ],
     "layouts": {
         "keymap": [
