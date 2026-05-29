@@ -126,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_NO,    KC_NO,      RSFT(KC_ENT),  RCTL(KC_DEL),  KC_DEL,  KC_PSCR,
         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,              KC_NO,      KC_ENT,        RCTL(KC_BSPC), KC_BSPC, KC_ESC,
         KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_NO,             RUEN_COMMA, RUEN_DOT,      KC_LBRC,       KC_RBRC, KC_NO,
-                          KC_NO,   OSM(MOD_LSFT), KC_NO,       KC_NO,      KC_NO,         KC_NO
+                          RUEN_WORD, OSM(MOD_LSFT), CW_TOGG,   KC_NO,      KC_NO,         KC_NO
     ),
 
     [_NAV] = LAYOUT_split_3x5_3(
@@ -137,10 +137,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_ADJ] = LAYOUT_split_3x5_3(
-        QK_BOOT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,        KC_NO, KC_VOLD, KC_MUTE, KC_VOLU, KC_PSCR,
-        KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,        KC_NO, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO,
-                        KC_NO, KC_NO, KC_NO,        KC_NO, KC_NO,   KC_NO
+        QK_BOOT, RGB_TOG, RGB_MOD,  RGB_RMOD, KC_NO,   KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,    KC_NO,
+        KC_NO,   RGB_VAD, RGB_VAI,  RGB_HUD,  RGB_HUI,        KC_NO, KC_VOLD, KC_MUTE, KC_VOLU, KC_PSCR,
+        EE_CLR,   RGB_SAD, RGB_SAI,  KC_NO,    KC_NO,          KC_NO, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO,
+                          KC_NO,    KC_NO,    KC_NO,          KC_NO, KC_NO,   KC_NO
     ),
 };
 

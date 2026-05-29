@@ -28,3 +28,13 @@
 // Defaults: Ctrl+Shift+1 → English, Ctrl+Shift+2 → Russian
 #define RUEN_KEY_EN LCTL(LSFT(KC_1))
 #define RUEN_KEY_RU LCTL(LSFT(KC_2))
+
+// Default LED: very dim peachy pink. Undef first because keyboard.json bakes
+// defaults into info_config.h without ifndef guards.
+#undef RGBLIGHT_DEFAULT_HUE
+#undef RGBLIGHT_DEFAULT_SAT
+#undef RGBLIGHT_DEFAULT_VAL
+#define RGBLIGHT_DEFAULT_HUE 5
+#define RGBLIGHT_DEFAULT_SAT 140
+#define RGBLIGHT_DEFAULT_VAL 20
+#define RGBLIGHT_LIMIT_VAL 80
