@@ -1,0 +1,5 @@
+.build/
+.git/
+*.uf2
+*.hex
+*.bin

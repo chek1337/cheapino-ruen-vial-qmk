@@ -136,3 +136,48 @@ UF2 будет создан в `.build/cheapino_ruen.uf2`.
 
 Поставить плату в bootloader (зажать boot при подключении USB или нажать `QK_BOOT` с уже прошитой клавиатуры) и скопировать `.uf2` на появившийся том `RPI-RP2`.
 
+---
+
+## Сборка через Docker
+
+Альтернатива установке QMK CLI и ARM-тулчейна локально — собирать прошивку в контейнере на базе официального образа [`qmkfm/qmk_cli`](https://hub.docker.com/r/qmkfm/qmk_cli).
+
+В корне репозитория лежат:
+
+- `Dockerfile` — минимальный образ поверх `qmkfm/qmk_cli`
+- `docker.mk` — Makefile с командами `build`, `compile`, `clean`, `shell`
+- `.dockerignore` — исключает `.build/`, `.git/` и артефакты из контекста сборки
+
+### Требования
+
+- Установленный Docker
+- Инициализированные субмодули (см. шаг 2 выше): `make git-submodule`
+
+### Команды
+
+```bash
+# 1. Собрать Docker-образ (один раз)
+make -f docker.mk build
+
+# 2. Скомпилировать прошивку (по умолчанию cheapino:ruen)
+make -f docker.mk compile
+```
+
+UF2 окажется в `.build/cheapino_ruen.uf2` на хост-машине — рабочая директория монтируется в контейнер.
+
+### Дополнительно
+
+| Команда | Что делает |
+|---|---|
+| `make -f docker.mk clean` | Удалить `.build/` |
+| `make -f docker.mk shell` | Открыть интерактивный bash в контейнере (для отладки) |
+
+### Сборка другой раскладки
+
+Переменные `KB` и `KM` можно переопределить:
+
+```bash
+make -f docker.mk compile KM=vial
+make -f docker.mk compile KB=cheapino KM=default
+```
+
