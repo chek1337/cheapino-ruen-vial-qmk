@@ -6,7 +6,19 @@
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 14
 
-#define PERMISSIVE_HOLD
+// Tap-hold tuning. Only applied in pure-QMK builds; Vial overlay (qmk_settings.c)
+// hijacks these callbacks and reads values from runtime QS settings instead, so
+// defining them here in Vial mode either gets ignored (PERMISSIVE_HOLD) or
+// triggers redefinition errors (CHORDAL_HOLD / HOLD_ON_OTHER_KEY_PRESS_PER_KEY).
+#ifndef QMK_SETTINGS
+#    define PERMISSIVE_HOLD
+#    define CHORDAL_HOLD
+#    define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+// ruen.c references get_tapping_term(), which only exists when this is set.
+// Vial enables it transitively via TAP_DANCE_ENABLE.
+#    define TAPPING_TERM_PER_KEY
+#endif
+
 #define COMBO_TERM 40
 
 #define ONESHOT_TIMEOUT 1500

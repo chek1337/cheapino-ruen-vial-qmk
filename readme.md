@@ -72,6 +72,24 @@ keyboards/cheapino/keymaps/ruen/vial.json
 ```
 
 
+## Режимы сборки
+
+Поддерживаются **два режима**, переключаются флагом `VIAL_ENABLE` (и `VIA_ENABLE`) в `keyboards/cheapino/keymaps/ruen/rules.mk`.
+
+| Режим | `VIAL_ENABLE` | `VIA_ENABLE` | `COMBO_ENABLE` | Что даёт |
+|---|---|---|---|---|
+| **Pure QMK** (по умолчанию) | `no` | `no` | `no` | Корректный per-key `HOLD_ON_OTHER_KEY_PRESS` для thumb-LT, корректный `CHORDAL_HOLD`, `PERMISSIVE_HOLD`. HRM не срабатывает жадно при кросс-руке. Combos и runtime-перенастройка раскладки **недоступны**. |
+| **Vial** | `yes` | `yes` | `yes` | Полный Vial GUI: runtime remap, runtime combos, runtime tap-hold settings. Per-key callback'и из `keymap.c` игнорируются (их перехватывает `quantum/qmk_settings.c`); поведение tap-hold настраивается только через Vial GUI. |
+
+Код в `config.h` и `keymap.c` обёрнут в `#ifndef QMK_SETTINGS` — наши `#define`'ы и override `get_hold_on_other_key_press` подключаются только в pure-QMK режиме, в Vial-режиме они автоматически отключаются.
+
+### Когда какой режим использовать
+
+- **Pure QMK** — основной рабочий режим. HRM и thumb-LT работают как задумано.
+- **Vial** — если нужно временно поэкспериментировать с раскладкой через GUI без пересборки. Будь готов, что HOOKP/Chordal Hold нужно включать в Vial GUI вручную (toggles в настройках tap-hold), и HRM может срабатывать как мод при быстром кросс-hand наборе.
+
+---
+
 ## Установка и сборка прошивки
 
 ### 1. Клонировать репозиторий
@@ -88,9 +106,33 @@ git checkout cheapinov2_ruen
 make git-submodule
 ```
 
-### 3. Скомпилировать прошивку
+### 3. Выбрать режим сборки
+
+Открыть `keyboards/cheapino/keymaps/ruen/rules.mk` и выставить флаги:
+
+**Pure QMK (рекомендуется):**
+```makefile
+VIA_ENABLE = no
+VIAL_ENABLE = no
+COMBO_ENABLE = no
+```
+
+**Vial:**
+```makefile
+VIA_ENABLE = yes
+VIAL_ENABLE = yes
+COMBO_ENABLE = yes
+```
+
+### 4. Скомпилировать прошивку
 
 ```bash
 qmk compile -kb cheapino -km ruen
 ```
+
+UF2 будет создан в `.build/cheapino_ruen.uf2`.
+
+### 5. Прошивка
+
+Поставить плату в bootloader (зажать boot при подключении USB или нажать `QK_BOOT` с уже прошитой клавиатуры) и скопировать `.uf2` на появившийся том `RPI-RP2`.
 
