@@ -6,26 +6,15 @@ static bool ruen_mod_restore_state = false;
 static uint16_t ruen_mod_timer = 0;
 static bool ruen_word_active = false;
 
-static void ruen_send_layout_switch(void) {
+static void ruen_send_os_shortcut(uint16_t keycode) {
     uint8_t mods = get_mods();
 
     if (mods != 0) {
         del_mods(mods);
     }
 
-    if (keymap_config.swap_lctl_lgui) {
-        register_code(KC_LCTL);
-        tap_code(KC_SPACE);
-        wait_ms(50);
-        unregister_code(KC_LCTL);
-        wait_ms(50);
-    } else {
-        register_code(KC_LGUI);
-        tap_code(KC_SPACE);
-        wait_ms(50);
-        unregister_code(KC_LGUI);
-        wait_ms(50);
-    }
+    tap_code16(keycode);
+    wait_ms(50);
 
     if (mods != 0) {
         add_mods(mods);
@@ -37,7 +26,7 @@ static void ruen_set_layout(bool russian) {
         return;
     }
 
-    ruen_send_layout_switch();
+    ruen_send_os_shortcut(russian ? RUEN_KEY_RU : RUEN_KEY_EN);
     ruen_is_russian = russian;
 }
 
@@ -45,12 +34,16 @@ static void ruen_toggle_layout(void) {
     ruen_set_layout(!ruen_is_russian);
 }
 
-static void ruen_set_en(void) {
+void ruen_force_en(void) {
     ruen_set_layout(false);
 }
 
-static void ruen_set_ru(void) {
+void ruen_force_ru(void) {
     ruen_set_layout(true);
+}
+
+bool ruen_is_ru(void) {
+    return ruen_is_russian;
 }
 
 static void ruen_send_layout_symbol(uint16_t en_keycode, uint16_t ru_keycode) {
@@ -71,6 +64,10 @@ static void ruen_send_us_symbol(uint16_t keycode) {
 
 static void ruen_send_ru_symbol(uint16_t keycode) {
     ruen_send_temporary_symbol(true, keycode);
+}
+
+void ruen_tap_in_en(uint16_t keycode) {
+    ruen_send_us_symbol(keycode);
 }
 
 static void ruen_store(void) {
@@ -95,7 +92,7 @@ bool process_record_ruen(uint16_t keycode, keyrecord_t *record) {
             case KC_ENT:
             case KC_ESC:
             case KC_MINS:
-                ruen_set_ru();
+                ruen_force_ru();
                 ruen_word_active = false;
                 caps_word_off();
                 break;
@@ -110,10 +107,10 @@ bool process_record_ruen(uint16_t keycode, keyrecord_t *record) {
                 ruen_toggle_layout();
                 return false;
             case RUEN_EN:
-                ruen_set_en();
+                ruen_force_en();
                 return false;
             case RUEN_RU:
-                ruen_set_ru();
+                ruen_force_ru();
                 return false;
             case RUEN_DOT:
                 ruen_send_layout_symbol(KC_DOT, KC_SLSH);
@@ -199,7 +196,7 @@ bool process_record_ruen(uint16_t keycode, keyrecord_t *record) {
                         clear_oneshot_mods();
                     }
 
-                    ruen_set_en();
+                    ruen_force_en();
                     ruen_word_active = true;
 
                     if (shift_active) {
@@ -218,6 +215,12 @@ bool process_record_ruen(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case RUEN_BSLS:
                 ruen_send_us_symbol(KC_BSLS);
+                return false;
+            case RUEN_CSC:
+                ruen_send_us_symbol(LSFT(LCTL(KC_C)));
+                return false;
+            case RUEN_CSV:
+                ruen_send_us_symbol(LSFT(LCTL(KC_V)));
                 return false;
             default:
                 break;

@@ -35,7 +35,15 @@ enum ruen_keycodes {
     RUEN_REVERT,
     RUEN_QUOTE,
     RUEN_BSLS,
+    RUEN_LAYER_TOGGLE,
+    RUEN_CSC,
+    RUEN_CSV,
 };
 
 bool process_record_ruen(uint16_t keycode, keyrecord_t *record);
 void ruen_init(void);
+
+void ruen_force_en(void);
+void ruen_force_ru(void);
+bool ruen_is_ru(void);
+void ruen_tap_in_en(uint16_t keycode);
